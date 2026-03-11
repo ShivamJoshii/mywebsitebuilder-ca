@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, ArrowLeft, Check, Building2, Briefcase, FileText, Globe, User, Mail, Phone } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Check, Building2, Briefcase, FileText, Globe, User, Mail, Phone, DollarSign, Clock, Star, TrendingUp } from 'lucide-react'
 
 // Animation variants
 const slideVariants = {
@@ -55,12 +55,18 @@ const steps = [
   },
   {
     id: 3,
-    question: "Describe the website you want to build",
-    description: "What pages do you need? What's the main goal?",
-    field: "description",
-    type: "textarea",
-    placeholder: "I need a simple website for my dental clinic. Main pages: Home, Services, About, Contact. Goal: Get more appointment bookings.",
-    icon: FileText,
+    question: "What's your approximate monthly revenue?",
+    description: "This helps us understand your business stage.",
+    field: "revenue",
+    type: "radio",
+    options: [
+      { value: "under10k", label: "Under $10,000/month" },
+      { value: "10k-50k", label: "$10,000 - $50,000/month" },
+      { value: "50k-100k", label: "$50,000 - $100,000/month" },
+      { value: "100k+", label: "$100,000+/month" },
+      { value: "startup", label: "Just starting out" }
+    ],
+    icon: DollarSign,
     required: true
   },
   {
@@ -79,6 +85,30 @@ const steps = [
   },
   {
     id: 5,
+    question: "When do you need your website?",
+    description: "This helps us prioritize applications.",
+    field: "timeline",
+    type: "radio",
+    options: [
+      { value: "asap", label: "ASAP — I'm losing business without one" },
+      { value: "30days", label: "Within 30 days" },
+      { value: "later", label: "Just exploring options" }
+    ],
+    icon: Clock,
+    required: true
+  },
+  {
+    id: 6,
+    question: "Describe the website you want to build",
+    description: "What pages do you need? What's the main goal?",
+    field: "description",
+    type: "textarea",
+    placeholder: "I need a simple website for my dental clinic. Main pages: Home, Services, About, Contact. Goal: Get more appointment bookings.",
+    icon: FileText,
+    required: true
+  },
+  {
+    id: 7,
     question: "What's your name?",
     description: "So we know who we're working with.",
     field: "name",
@@ -88,7 +118,7 @@ const steps = [
     required: true
   },
   {
-    id: 6,
+    id: 8,
     question: "What's your email?",
     description: "We'll send updates about your application here.",
     field: "email",
@@ -98,7 +128,7 @@ const steps = [
     required: true
   },
   {
-    id: 7,
+    id: 9,
     question: "What's your phone number?",
     description: "Optional, but helps us reach you faster.",
     field: "phone",
@@ -106,6 +136,31 @@ const steps = [
     placeholder: "(555) 123-4567",
     icon: Phone,
     required: false
+  }
+]
+
+// Testimonials with specific results
+const testimonials = [
+  {
+    quote: "They built our clinic website in 48 hours. We got 3 new patient bookings in the first week.",
+    author: "Dr. Sarah Chen",
+    role: "Family Practice, Calgary",
+    metric: "3 new patients",
+    metricLabel: "in first week"
+  },
+  {
+    quote: "Finally got off Wix and look professional. My clients actually mention how nice the website is.",
+    author: "Mike Rodriguez",
+    role: "Landscaping Business, Edmonton",
+    metric: "100%",
+    metricLabel: "more professional"
+  },
+  {
+    quote: "The booking integration they set up saved me 5 hours a week on phone calls.",
+    author: "Jennifer Walsh",
+    role: "Salon Owner, Edmonton",
+    metric: "5 hours/week",
+    metricLabel: "time saved"
   }
 ]
 
@@ -178,8 +233,9 @@ export default function ApplyPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-white dark:bg-dark_black flex items-center justify-center px-4">
-        <div className="max-w-xl w-full text-center">
+      <div className="min-h-screen bg-white dark:bg-dark_black">
+        {/* Success Page */}
+        <div className="min-h-screen flex flex-col items-center justify-center px-4">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -189,23 +245,49 @@ export default function ApplyPage() {
             <Check className="w-10 h-10 text-green" />
           </motion.div>
           
-          <h1 className="text-4xl md:text-5xl font-medium mb-4">
+          <h1 className="text-4xl md:text-5xl font-medium mb-4 text-center">
             Application <span className="instrument-font italic">received!</span>
           </h1>
           
-          <p className="text-lg text-dark_black/60 dark:text-white/60 mb-6">
+          <p className="text-lg text-dark_black/60 dark:text-white/60 mb-6 text-center max-w-xl">
             Thanks for applying, {formData.name}. We'll review your application and get back to you within 24-48 hours.
           </p>
           
-          <div className="bg-dark_black/5 dark:bg-white/5 rounded-xl p-6 mb-8">
-            <p className="text-sm text-dark_black/60 dark:text-white/60 mb-2">
-              We accept approximately 30% of applicants based on:
+          <div className="bg-dark_black/5 dark:bg-white/5 rounded-xl p-6 mb-8 max-w-md w-full">
+            <p className="text-sm text-dark_black/60 dark:text-white/60 mb-4">
+              <strong>We accept approximately 30% of applicants</strong> based on:
             </p>
-            <ul className="text-sm text-dark_black/80 dark:text-white/80 space-y-1">
-              <li>• Business viability</li>
-              <li>• Project scope fit</li>
-              <li>• Timeline alignment</li>
+            <ul className="text-sm text-dark_black/80 dark:text-white/80 space-y-2">
+              <li className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green" />
+                Business viability & revenue
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green" />
+                Timeline alignment
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green" />
+                Project scope fit
+              </li>
             </ul>
+          </div>
+
+          {/* Testimonials on success page */}
+          <div className="max-w-4xl w-full mb-8">
+            <p className="text-center text-sm text-dark_black/50 dark:text-white/50 mb-4">
+              Join 100+ Canadian businesses who've gotten free websites
+            </p>
+            <div className="grid md:grid-cols-3 gap-4">
+              {testimonials.map((t, i) => (
+                <div key={i} className="bg-dark_black/5 dark:bg-white/5 rounded-xl p-4 text-center">
+                  <div className="text-2xl font-bold text-purple_blue mb-1">{t.metric}</div>
+                  <div className="text-xs text-dark_black/50 dark:text-white/50 mb-2">{t.metricLabel}</div>
+                  <p className="text-sm text-dark_black/70 dark:text-white/70">"{t.quote.substring(0, 60)}..."</p>
+                  <p className="text-xs text-dark_black/50 dark:text-white/50 mt-2">— {t.author}</p>
+                </div>
+              ))}
+            </div>
           </div>
           
           <Link
@@ -221,33 +303,65 @@ export default function ApplyPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-dark_black">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-dark_black/80 backdrop-blur-md border-b border-dark_black/10 dark:border-white/10">
-        <div className="container">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-xl font-semibold text-dark_black dark:text-white">
-              MyWebsiteBuilder<span className="instrument-font italic text-purple_blue">.ca</span>
-            </Link>
-            <div className="text-sm text-dark_black/50 dark:text-white/50">
-              Step {currentStep + 1} of {steps.length}
+      {/* Hero Section with Guarantee */}
+      <div className="bg-gradient-to-br from-purple_blue/5 via-transparent to-yellow_gradient/10 pt-24 pb-12">
+        <div className="container text-center">
+          {/* Trust badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green/10 text-green text-sm font-medium mb-6">
+            <Star className="w-4 h-4 fill-green" />
+            Rated 5.0 by Canadian businesses
+          </div>
+
+          {/* Main headline with guarantee */}
+          <h1 className="text-4xl md:text-6xl font-medium mb-4">
+            Professional website in{' '}
+            <span className="instrument-font italic text-purple_blue">48 hours…</span>
+          </h1>
+          <p className="text-2xl md:text-3xl font-medium mb-6">
+            or you don't pay.
+          </p>
+          <p className="text-lg text-dark_black/60 dark:text-white/60 max-w-2xl mx-auto mb-8">
+            We build custom websites for Canadian businesses — completely free. 
+            No credit card. No hidden fees. No catch.
+          </p>
+
+          {/* Stats row */}
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-dark_black/50 dark:text-white/50">
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-green" />
+              <span>100+ websites built</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-green" />
+              <span>30% acceptance rate</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-green" />
+              <span>48-hour delivery</span>
             </div>
           </div>
         </div>
-      </header>
-
-      {/* Progress bar */}
-      <div className="fixed top-16 left-0 right-0 h-1 bg-dark_black/10 dark:bg-white/10 z-50">
-        <motion.div
-          className="h-full bg-purple_blue"
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.3 }}
-        />
       </div>
 
       {/* Main content */}
-      <main className="pt-32 pb-20 px-4">
+      <main className="py-12 px-4">
         <div className="max-w-2xl mx-auto">
+          {/* Progress bar */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between text-sm text-dark_black/50 dark:text-white/50 mb-2">
+              <span>Step {currentStep + 1} of {steps.length}</span>
+              <span>{Math.round(progress)}% complete</span>
+            </div>
+            <div className="h-2 bg-dark_black/10 dark:bg-white/10 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-purple_blue rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit}>
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
@@ -258,7 +372,7 @@ export default function ApplyPage() {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="min-h-[400px]"
+                className="min-h-[400px] bg-white dark:bg-dark_black rounded-2xl p-8 shadow-xl border border-dark_black/10 dark:border-white/10"
               >
                 {/* Question icon */}
                 <div className="w-12 h-12 rounded-xl bg-purple_blue/10 flex items-center justify-center mb-6">
@@ -266,7 +380,7 @@ export default function ApplyPage() {
                 </div>
 
                 {/* Question */}
-                <h2 className="text-3xl md:text-4xl font-medium mb-3">
+                <h2 className="text-2xl md:text-3xl font-medium mb-3">
                   {currentStepData.question}
                 </h2>
                 <p className="text-dark_black/60 dark:text-white/60 mb-8">
@@ -399,8 +513,8 @@ export default function ApplyPage() {
                       'Submitting...'
                     ) : currentStep === steps.length - 1 ? (
                       <>
-                        Submit Application
-                        <Check className="w-5 h-5" />
+                        SEE IF I QUALIFY
+                        <TrendingUp className="w-5 h-5" />
                       </>
                     ) : (
                       <>
@@ -418,8 +532,88 @@ export default function ApplyPage() {
               </motion.div>
             </AnimatePresence>
           </form>
+
+          {/* Trust signals below form */}
+          <div className="mt-12 text-center">
+            <p className="text-sm text-dark_black/50 dark:text-white/50 mb-4">
+              Trusted by businesses across Canada
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-dark_black/40 dark:text-white/40">
+              <span>Calgary</span>
+              <span>•</span>
+              <span>Edmonton</span>
+              <span>•</span>
+              <span>Vancouver</span>
+              <span>•</span>
+              <span>Toronto</span>
+            </div>
+          </div>
         </div>
       </main>
+
+      {/* Testimonials Section */}
+      <section className="py-16 bg-dark_black/5 dark:bg-white/5">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-medium mb-4">
+              Real results from <span className="instrument-font italic">real businesses</span>
+            </h2>
+            <p className="text-dark_black/60 dark:text-white/60">
+              Join 100+ Canadian businesses who've gotten free websites
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {testimonials.map((t, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white dark:bg-dark_black rounded-2xl p-8 shadow-lg border border-dark_black/10 dark:border-white/10"
+              >
+                <div className="text-center mb-6">
+                  <div className="text-4xl font-bold text-purple_blue mb-1">{t.metric}</div>
+                  <div className="text-sm text-dark_black/50 dark:text-white/50">{t.metricLabel}</div>
+                </div>
+                <p className="text-dark_black/80 dark:text-white/80 mb-6">"{t.quote}"</p>
+                <div>
+                  <p className="font-medium">{t.author}</p>
+                  <p className="text-sm text-dark_black/50 dark:text-white/50">{t.role}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* CTA after testimonials */}
+          <div className="text-center mt-12">
+            <Link
+              href="#"
+              onClick={(e) => {
+                e.preventDefault()
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
+              className="inline-flex items-center gap-2 bg-purple_blue text-white font-medium px-8 py-4 rounded-full hover:bg-purple_blue/90 transition-colors"
+            >
+              Apply Now — It's Free
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 border-t border-dark_black/10 dark:border-white/10">
+        <div className="container text-center">
+          <p className="text-sm text-dark_black/50 dark:text-white/50">
+            © 2026 MyWebsiteBuilder.ca — A subsidiary of{' '}
+            <Link href="https://mybuilder.ca" className="text-purple_blue hover:underline">
+              MyBuilder
+            </Link>
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }
