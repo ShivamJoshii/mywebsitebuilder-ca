@@ -321,26 +321,29 @@ export default function ApplyPage() {
 
                   {currentStepData.type === 'select' && currentStepData.options && (
                     <div className="space-y-3">
-                      {currentStepData.options.map((option) => (
-                        <label
-                          key={option}
-                          className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all ${
-                            formData[currentStepData.field] === option
-                              ? 'border-purple_blue bg-purple_blue/5'
-                              : 'border-dark_black/20 dark:border-white/20 hover:border-purple_blue/50'
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            name={currentStepData.field}
-                            value={option}
-                            checked={formData[currentStepData.field] === option}
-                            onChange={(e) => updateField(currentStepData.field, e.target.value)}
-                            className="w-5 h-5 text-purple_blue"
-                          />
-                          <span className="text-lg">{option}</span>
-                        </label>
-                      ))}
+                      {currentStepData.options.map((option) => {
+                        const optionStr = String(option)
+                        return (
+                          <label
+                            key={optionStr}
+                            className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all ${
+                              formData[currentStepData.field] === optionStr
+                                ? 'border-purple_blue bg-purple_blue/5'
+                                : 'border-dark_black/20 dark:border-white/20 hover:border-purple_blue/50'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name={currentStepData.field}
+                              value={optionStr}
+                              checked={formData[currentStepData.field] === optionStr}
+                              onChange={(e) => updateField(currentStepData.field, e.target.value)}
+                              className="w-5 h-5 text-purple_blue"
+                            />
+                            <span className="text-lg">{optionStr}</span>
+                          </label>
+                        )
+                      })}
                     </div>
                   )}
 
