@@ -154,8 +154,8 @@ export default function Home() {
               <Link href="#faq" className="text-sm text-dark_black/70 dark:text-white/70 hover:text-purple_blue transition-colors">
                 FAQ
               </Link>
-              <Link 
-                href="#contact" 
+              <Link
+                href="/apply"
                 className="group bg-purple_blue text-white font-medium flex items-center gap-2 py-2 px-5 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
                 Get Started
@@ -190,7 +190,7 @@ export default function Home() {
               <Link href="#faq" className="block text-dark_black/70 dark:text-white/70" onClick={() => setMobileMenu(false)}>
                 FAQ
               </Link>
-              <Link href="#contact" className="block text-purple_blue font-medium" onClick={() => setMobileMenu(false)}>
+              <Link href="/apply" className="block text-purple_blue font-medium" onClick={() => setMobileMenu(false)}>
                 Get Started →
               </Link>
             </div>
@@ -232,11 +232,11 @@ export default function Home() {
             {/* CTA Buttons */}
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="#free-website"
+                href="/apply"
                 className="group bg-purple_blue text-white font-medium flex items-center gap-3 py-3 px-6 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
                 <span className="transform transition-transform group-hover:translate-x-1">
-                  Claim your free website
+                  Apply in 2 minutes
                 </span>
                 <svg width="32" height="32" viewBox="0 0 40 40" fill="none" className="transform transition-transform group-hover:rotate-45">
                   <rect width="40" height="40" rx="20" className="fill-white group-hover:fill-purple_blue transition-colors"/>
@@ -362,10 +362,10 @@ export default function Home() {
             </div>
 
             <Link
-              href="#contact"
+              href="/apply"
               className="group inline-flex items-center gap-3 bg-purple_blue text-white font-medium py-3 px-8 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
             >
-              Claim your free website
+              Apply in 2 minutes
               <svg width="32" height="32" viewBox="0 0 40 40" fill="none" className="transform transition-transform group-hover:rotate-45">
                 <rect width="40" height="40" rx="20" className="fill-white group-hover:fill-purple_blue transition-colors"/>
                 <path d="M15.832 15.3334H24.1654V23.6667" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
