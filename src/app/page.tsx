@@ -80,7 +80,7 @@ const testimonials = [
   {
     quote: "They built our clinic website in 48 hours. Professional, fast, and exactly what we needed.",
     author: "Dr. Sarah Chen",
-    role: "Family Practice, Calgary",
+    role: "Family Practice",
     rating: 5
   },
   {
@@ -92,7 +92,7 @@ const testimonials = [
   {
     quote: "Our booking requests tripled after the new site launched. Worth every penny.",
     author: "Jennifer Walsh",
-    role: "Salon Owner, Edmonton",
+    role: "Salon Owner",
     rating: 5
   }
 ]
@@ -213,14 +213,14 @@ export default function Home() {
             {/* Badge */}
             <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple_blue/10 text-purple_blue text-sm font-medium mb-8">
               <span className="w-2 h-2 rounded-full bg-green animate-pulse" />
-              Now building in Calgary, Edmonton & Vancouver
+              Now serving clients worldwide
             </motion.div>
 
             {/* Headline */}
             <motion.h1 variants={fadeInUp} className="font-medium mb-6">
               Professional websites for{' '}
               <span className="instrument-font italic font-normal dark:text-white/70">
-                Canadian businesses
+                businesses worldwide
               </span>
             </motion.h1>
 
@@ -265,7 +265,7 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-green" />
-                <span>Canadian owned & operated</span>
+                <span>Serving clients worldwide</span>
               </div>
             </motion.div>
           </motion.div>
@@ -276,12 +276,12 @@ export default function Home() {
       <section className="py-12 border-y border-dark_black/10 dark:border-white/10">
         <div className="container">
           <p className="text-center text-sm text-dark_black/50 dark:text-white/50 mb-8">
-            Trusted by businesses across Canada
+            Trusted by businesses worldwide
           </p>
           <div className="flex flex-wrap items-center justify-center gap-12 opacity-40">
             <span className="text-xl font-bold text-dark_black dark:text-white">United Health Centres</span>
-            <span className="text-xl font-bold text-dark_black dark:text-white">Calgary Medical</span>
-            <span className="text-xl font-bold text-dark_black dark:text-white">Edmonton Care</span>
+            <span className="text-xl font-bold text-dark_black dark:text-white">Medical Practices</span>
+            <span className="text-xl font-bold text-dark_black dark:text-white">Local Services</span>
             <span className="text-xl font-bold text-dark_black dark:text-white">Prairie Health</span>
           </div>
         </div>
@@ -422,7 +422,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="font-medium mb-4">
-              Loved by <span className="instrument-font italic font-normal dark:text-white/70">Canadian businesses</span>
+              Loved by <span className="instrument-font italic font-normal dark:text-white/70">businesses worldwide</span>
             </h2>
           </motion.div>
 

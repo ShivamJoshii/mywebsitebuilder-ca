@@ -276,7 +276,7 @@ export default function ApplyPage() {
           {/* Testimonials on success page */}
           <div className="max-w-4xl w-full mb-8">
             <p className="text-center text-sm text-dark_black/50 dark:text-white/50 mb-4">
-              Join 100+ Canadian businesses who've gotten free websites
+              Join 100+ businesses worldwide who've gotten free websites
             </p>
             <div className="grid md:grid-cols-3 gap-4">
               {testimonials.map((t, i) => (
@@ -309,20 +309,20 @@ export default function ApplyPage() {
           {/* Trust badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green/10 text-green text-sm font-medium mb-6">
             <Star className="w-4 h-4 fill-green" />
-            Rated 5.0 by Canadian businesses
+            Rated 5.0 by businesses worldwide
           </div>
 
           {/* Main headline with guarantee */}
           <h1 className="text-4xl md:text-6xl font-medium mb-4">
             Professional website in{' '}
-            <span className="instrument-font italic text-purple_blue">48 hours…</span>
+            <span className="instrument-font italic text-purple_blue">48 hours</span>
           </h1>
           <p className="text-2xl md:text-3xl font-medium mb-6">
-            or you don't pay.
+            completely free.
           </p>
           <p className="text-lg text-dark_black/60 dark:text-white/60 max-w-2xl mx-auto mb-8">
-            We build custom websites for Canadian businesses — completely free. 
-            No credit card. No hidden fees. No catch.
+            We build custom websites for businesses worldwide, completely free. 
+            No hidden fees. No catch.
           </p>
 
           {/* Stats row */}
@@ -536,16 +536,16 @@ export default function ApplyPage() {
           {/* Trust signals below form */}
           <div className="mt-12 text-center">
             <p className="text-sm text-dark_black/50 dark:text-white/50 mb-4">
-              Trusted by businesses across Canada
+              Trusted by businesses worldwide
             </p>
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-dark_black/40 dark:text-white/40">
-              <span>Calgary</span>
+              <span>North America</span>
               <span>•</span>
-              <span>Edmonton</span>
+              <span>Europe</span>
               <span>•</span>
-              <span>Vancouver</span>
+              <span>Asia</span>
               <span>•</span>
-              <span>Toronto</span>
+              <span>Australia</span>
             </div>
           </div>
         </div>
@@ -559,7 +559,7 @@ export default function ApplyPage() {
               Real results from <span className="instrument-font italic">real businesses</span>
             </h2>
             <p className="text-dark_black/60 dark:text-white/60">
-              Join 100+ Canadian businesses who've gotten free websites
+              Join 100+ businesses worldwide who've gotten free websites
             </p>
           </div>
 
