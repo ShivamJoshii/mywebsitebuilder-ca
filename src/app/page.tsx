@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { 
   Check, 
   ArrowRight, 
@@ -11,20 +12,19 @@ import {
   Shield,
   Clock,
   Star,
-  ChevronDown,
   Menu,
-  X
+  X,
+  CheckCircle2
 } from 'lucide-react'
-import Link from 'next/link'
 
-// Animation variants
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
+// Animation variants (same as mybuilder.ca)
+const fadeInUp = {
+  initial: { y: '20%', opacity: 0 },
+  animate: { y: 0, opacity: 1 },
+  transition: { duration: 1, delay: 0.8 }
 }
 
-const stagger = {
+const staggerContainer = {
   animate: {
     transition: {
       staggerChildren: 0.1
@@ -125,39 +125,51 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [mobileMenu, setMobileMenu] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    business: '',
+    service: '',
+    message: ''
+  })
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-dark_black">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-dark_black/80 backdrop-blur-md border-b border-dark_black/10 dark:border-white/10">
         <div className="container">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-xl font-bold text-primary">
-              MyWebsiteBuilder<span className="text-accent">.ca</span>
+            <Link href="/" className="text-xl font-semibold text-dark_black dark:text-white">
+              MyWebsiteBuilder<span className="instrument-font italic text-purple_blue">.ca</span>
             </Link>
             
             {/* Desktop nav */}
             <div className="hidden md:flex items-center gap-8">
-              <Link href="#services" className="text-sm text-gray-600 hover:text-primary transition-colors">
+              <Link href="#services" className="text-sm text-dark_black/70 dark:text-white/70 hover:text-purple_blue transition-colors">
                 Services
               </Link>
-              <Link href="#process" className="text-sm text-gray-600 hover:text-primary transition-colors">
+              <Link href="#process" className="text-sm text-dark_black/70 dark:text-white/70 hover:text-purple_blue transition-colors">
                 Process
               </Link>
-              <Link href="#faq" className="text-sm text-gray-600 hover:text-primary transition-colors">
+              <Link href="#faq" className="text-sm text-dark_black/70 dark:text-white/70 hover:text-purple_blue transition-colors">
                 FAQ
               </Link>
               <Link 
                 href="#contact" 
-                className="text-sm bg-primary text-white px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
+                className="group bg-purple_blue text-white font-medium flex items-center gap-2 py-2 px-5 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
                 Get Started
+                <svg width="20" height="20" viewBox="0 0 40 40" fill="none" className="transform transition-transform group-hover:rotate-45">
+                  <rect width="40" height="40" rx="20" className="fill-white group-hover:fill-purple_blue transition-colors"/>
+                  <path d="M15.832 15.3334H24.1654V23.6667" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M15.832 23.6667L24.1654 15.3334" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </Link>
             </div>
 
             {/* Mobile menu button */}
             <button 
-              className="md:hidden p-2"
+              className="md:hidden p-2 text-dark_black dark:text-white"
               onClick={() => setMobileMenu(!mobileMenu)}
             >
               {mobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -167,18 +179,18 @@ export default function Home() {
 
         {/* Mobile menu */}
         {mobileMenu && (
-          <div className="md:hidden border-t border-gray-100 bg-white">
+          <div className="md:hidden border-t border-dark_black/10 dark:border-white/10 bg-white dark:bg-dark_black">
             <div className="container py-4 space-y-3">
-              <Link href="#services" className="block text-gray-600" onClick={() => setMobileMenu(false)}>
+              <Link href="#services" className="block text-dark_black/70 dark:text-white/70" onClick={() => setMobileMenu(false)}>
                 Services
               </Link>
-              <Link href="#process" className="block text-gray-600" onClick={() => setMobileMenu(false)}>
+              <Link href="#process" className="block text-dark_black/70 dark:text-white/70" onClick={() => setMobileMenu(false)}>
                 Process
               </Link>
-              <Link href="#faq" className="block text-gray-600" onClick={() => setMobileMenu(false)}>
+              <Link href="#faq" className="block text-dark_black/70 dark:text-white/70" onClick={() => setMobileMenu(false)}>
                 FAQ
               </Link>
-              <Link href="#contact" className="block text-primary font-medium" onClick={() => setMobileMenu(false)}>
+              <Link href="#contact" className="block text-purple_blue font-medium" onClick={() => setMobileMenu(false)}>
                 Get Started →
               </Link>
             </div>
@@ -187,55 +199,72 @@ export default function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-32">
-        <div className="container">
+      <section className="relative pt-44 pb-20 overflow-hidden">
+        {/* Background gradient (same as mybuilder.ca) */}
+        <div className="absolute inset-0 before:absolute before:w-full before:h-full before:bg-linear-to-r before:from-blue_gradient before:via-white before:to-yellow_gradient before:rounded-full before:top-24 before:blur-3xl before:-z-10 dark:before:from-dark_blue_gradient dark:before:via-black dark:before:to-dark_yellow_gradient" />
+        
+        <div className="container relative z-10">
           <motion.div 
             initial="initial"
             animate="animate"
-            variants={stagger}
+            variants={staggerContainer}
             className="max-w-4xl mx-auto text-center"
           >
-            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-8">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            {/* Badge */}
+            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple_blue/10 text-purple_blue text-sm font-medium mb-8">
+              <span className="w-2 h-2 rounded-full bg-green animate-pulse" />
               Now building in Calgary, Edmonton & Vancouver
             </motion.div>
 
-            <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            {/* Headline */}
+            <motion.h1 variants={fadeInUp} className="font-medium mb-6">
               Professional websites for{' '}
-              <span className="text-accent">Canadian businesses</span>
+              <span className="instrument-font italic font-normal dark:text-white/70">
+                Canadian businesses
+              </span>
             </motion.h1>
 
-            <motion.p variants={fadeIn} className="text-xl text-gray-600 max-w-2xl mx-auto mb-10">
+            {/* Subheadline */}
+            <motion.p variants={fadeInUp} className="text-xl text-dark_black/60 dark:text-white/60 max-w-2xl mx-auto mb-10">
               Fast, modern, and built to convert. We handle everything from design to launch so you can focus on your business.
             </motion.p>
 
-            <motion.div variants={fadeIn} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* CTA Buttons */}
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="#free-website"
-                className="w-full sm:w-auto bg-accent text-white font-medium px-8 py-4 rounded-full hover:bg-accent-light transition-colors flex items-center justify-center gap-2"
+                className="group bg-purple_blue text-white font-medium flex items-center gap-3 py-3 px-6 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
-                Claim your free website
-                <ArrowRight className="w-5 h-5" />
+                <span className="transform transition-transform group-hover:translate-x-1">
+                  Claim your free website
+                </span>
+                <svg width="32" height="32" viewBox="0 0 40 40" fill="none" className="transform transition-transform group-hover:rotate-45">
+                  <rect width="40" height="40" rx="20" className="fill-white group-hover:fill-purple_blue transition-colors"/>
+                  <path d="M15.832 15.3334H24.1654V23.6667" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M15.832 23.6667L24.1654 15.3334" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </Link>
               <Link
                 href="#services"
-                className="w-full sm:w-auto text-gray-600 font-medium px-8 py-4 hover:text-primary transition-colors"
+                className="group bg-transparent border border-dark_black dark:border-white/50 text-dark_black dark:text-white font-medium flex items-center gap-2 py-3 px-5 rounded-full transition-all hover:bg-dark_black hover:text-white dark:hover:bg-white dark:hover:text-dark_black"
               >
-                See our services →
+                <span>See our services</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
 
-            <motion.div variants={fadeIn} className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm text-gray-500">
+            {/* Trust indicators */}
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm text-dark_black/50 dark:text-white/50">
               <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green-500" />
+                <Check className="w-4 h-4 text-green" />
                 <span>Free option available</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green-500" />
+                <Check className="w-4 h-4 text-green" />
                 <span>48-hour delivery</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green-500" />
+                <Check className="w-4 h-4 text-green" />
                 <span>Canadian owned & operated</span>
               </div>
             </motion.div>
@@ -244,16 +273,16 @@ export default function Home() {
       </section>
 
       {/* Logos */}
-      <section className="py-12 border-y border-gray-100">
+      <section className="py-12 border-y border-dark_black/10 dark:border-white/10">
         <div className="container">
-          <p className="text-center text-sm text-gray-500 mb-8">
+          <p className="text-center text-sm text-dark_black/50 dark:text-white/50 mb-8">
             Trusted by businesses across Canada
           </p>
           <div className="flex flex-wrap items-center justify-center gap-12 opacity-40">
-            <span className="text-xl font-bold">United Health Centres</span>
-            <span className="text-xl font-bold">Calgary Medical</span>
-            <span className="text-xl font-bold">Edmonton Care</span>
-            <span className="text-xl font-bold">Prairie Health</span>
+            <span className="text-xl font-bold text-dark_black dark:text-white">United Health Centres</span>
+            <span className="text-xl font-bold text-dark_black dark:text-white">Calgary Medical</span>
+            <span className="text-xl font-bold text-dark_black dark:text-white">Edmonton Care</span>
+            <span className="text-xl font-bold text-dark_black dark:text-white">Prairie Health</span>
           </div>
         </div>
       </section>
@@ -261,14 +290,20 @@ export default function Home() {
       {/* Services */}
       <section id="services" className="py-24">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Everything you need to succeed online
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-medium mb-4">
+              Everything you need to{' '}
+              <span className="instrument-font italic font-normal dark:text-white/70">succeed online</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-dark_black/60 dark:text-white/60 max-w-2xl mx-auto">
               No templates. No bloated plugins. Just clean, fast websites that work.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((f, i) => (
@@ -278,13 +313,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-2xl border border-gray-100 hover:border-accent/20 hover:shadow-lg transition-all"
+                className="group p-6 rounded-2xl border border-dark_black/10 dark:border-white/10 hover:border-purple_blue/30 transition-all"
               >
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4">
-                  <f.icon className="w-6 h-6 text-accent" />
+                <div className="w-12 h-12 rounded-xl bg-purple_blue/10 flex items-center justify-center mb-4 group-hover:bg-purple_blue/20 transition-colors">
+                  <f.icon className="w-6 h-6 text-purple_blue" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
-                <p className="text-gray-600">{f.desc}</p>
+                <h3 className="text-xl font-medium mb-2">{f.title}</h3>
+                <p className="text-dark_black/60 dark:text-white/60">{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -292,59 +327,71 @@ export default function Home() {
       </section>
 
       {/* Free Website CTA */}
-      <section id="free-website" className="py-24 bg-primary text-white">
-        <div className="container">
+      <section id="free-website" className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple_blue/10 via-transparent to-yellow_gradient/20" />
+        
+        <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <span className="inline-block px-4 py-2 rounded-full bg-white/10 text-sm font-medium mb-6">
+            <span className="inline-block px-4 py-2 rounded-full bg-purple_blue/10 text-purple_blue text-sm font-medium mb-6">
               Limited time offer
             </span>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6">
-              Get a website built for free
+            <h2 className="font-medium mb-6">
+              Get a website built for{' '}
+              <span className="instrument-font italic font-normal dark:text-white/70">free</span>
             </h2>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto mb-10">
+            <p className="text-xl text-dark_black/60 dark:text-white/60 max-w-2xl mx-auto mb-10">
               Yes, actually free. No credit card, no hidden fees, no catch. We build you a professional website in 48 hours because we believe in proving our value first.
             </p>
 
             <div className="grid md:grid-cols-3 gap-6 text-left mb-12">
-              <div className="p-6 rounded-xl bg-white/5">
-                <Check className="w-6 h-6 text-green-400 mb-4" />
-                <h3 className="font-semibold mb-2">Custom design</h3>
-                <p className="text-white/70 text-sm">Not a template. Built for your brand.</p>
+              <div className="p-6 rounded-xl bg-white dark:bg-white/5 border border-dark_black/10 dark:border-white/10">
+                <Check className="w-6 h-6 text-green mb-4" />
+                <h3 className="font-medium mb-2">Custom design</h3>
+                <p className="text-dark_black/60 dark:text-white/60 text-sm">Not a template. Built for your brand.</p>
               </div>
-              <div className="p-6 rounded-xl bg-white/5">
-                <Check className="w-6 h-6 text-green-400 mb-4" />
-                <h3 className="font-semibold mb-2">Mobile optimized</h3>
-                <p className="text-white/70 text-sm">Looks perfect on every device.</p>
+              <div className="p-6 rounded-xl bg-white dark:bg-white/5 border border-dark_black/10 dark:border-white/10">
+                <Check className="w-6 h-6 text-green mb-4" />
+                <h3 className="font-medium mb-2">Mobile optimized</h3>
+                <p className="text-dark_black/60 dark:text-white/60 text-sm">Looks perfect on every device.</p>
               </div>
-              <div className="p-6 rounded-xl bg-white/5">
-                <Check className="w-6 h-6 text-green-400 mb-4" />
-                <h3 className="font-semibold mb-2">Ready to launch</h3>
-                <p className="text-white/70 text-sm">We handle hosting and setup.</p>
+              <div className="p-6 rounded-xl bg-white dark:bg-white/5 border border-dark_black/10 dark:border-white/10">
+                <Check className="w-6 h-6 text-green mb-4" />
+                <h3 className="font-medium mb-2">Ready to launch</h3>
+                <p className="text-dark_black/60 dark:text-white/60 text-sm">We handle hosting and setup.</p>
               </div>
             </div>
 
             <Link
               href="#contact"
-              className="inline-flex items-center gap-2 bg-white text-primary font-medium px-8 py-4 rounded-full hover:bg-gray-100 transition-colors"
+              className="group inline-flex items-center gap-3 bg-purple_blue text-white font-medium py-3 px-8 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
             >
               Claim your free website
-              <ArrowRight className="w-5 h-5" />
+              <svg width="32" height="32" viewBox="0 0 40 40" fill="none" className="transform transition-transform group-hover:rotate-45">
+                <rect width="40" height="40" rx="20" className="fill-white group-hover:fill-purple_blue transition-colors"/>
+                <path d="M15.832 15.3334H24.1654V23.6667" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M15.832 23.6667L24.1654 15.3334" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </Link>
           </div>
         </div>
       </section>
 
       {/* Process */}
-      <section id="process" className="py-24 bg-gray-50">
+      <section id="process" className="py-24 bg-dark_black/5 dark:bg-white/5">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              How it works
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-medium mb-4">
+              How it <span className="instrument-font italic font-normal dark:text-white/70">works</span>
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-dark_black/60 dark:text-white/60">
               Three simple steps to your new website
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {steps.map((s, i) => (
@@ -356,9 +403,9 @@ export default function Home() {
                 transition={{ delay: i * 0.15 }}
                 className="relative"
               >
-                <span className="text-6xl font-bold text-accent/10">{s.num}</span>
-                <h3 className="text-2xl font-semibold mt-4 mb-3">{s.title}</h3>
-                <p className="text-gray-600">{s.desc}</p>
+                <span className="text-6xl font-bold text-purple_blue/20">{s.num}</span>
+                <h3 className="text-2xl font-medium mt-4 mb-3">{s.title}</h3>
+                <p className="text-dark_black/60 dark:text-white/60">{s.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -368,11 +415,16 @@ export default function Home() {
       {/* Testimonials */}
       <section className="py-24">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Loved by Canadian businesses
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-medium mb-4">
+              Loved by <span className="instrument-font italic font-normal dark:text-white/70">Canadian businesses</span>
             </h2>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((t, i) => (
@@ -382,17 +434,17 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-2xl bg-gray-50"
+                className="p-8 rounded-2xl bg-dark_black/5 dark:bg-white/5"
               >
                 <div className="flex gap-1 mb-4">
                   {[...Array(t.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                    <Star key={i} className="w-5 h-5 fill-yellow_gradient text-yellow_gradient" />
                   ))}
                 </div>
-                <p className="text-lg mb-6 text-gray-700">"{t.quote}"</p>
+                <p className="text-lg mb-6 text-dark_black/80 dark:text-white/80">"{t.quote}"</p>
                 <div>
-                  <p className="font-semibold">{t.author}</p>
-                  <p className="text-sm text-gray-500">{t.role}</p>
+                  <p className="font-medium">{t.author}</p>
+                  <p className="text-sm text-dark_black/50 dark:text-white/50">{t.role}</p>
                 </div>
               </motion.div>
             ))}
@@ -401,29 +453,34 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-24 bg-gray-50">
+      <section id="faq" className="py-24 bg-dark_black/5 dark:bg-white/5">
         <div className="container max-w-3xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Questions? Answered.
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-medium mb-4">
+              Questions? <span className="instrument-font italic font-normal dark:text-white/70">Answered.</span>
             </h2>
-          </div>
+          </motion.div>
 
           <div className="space-y-4">
             {faqs.map((faq, i) => (
               <div
                 key={i}
-                className="bg-white rounded-xl border border-gray-100 overflow-hidden"
+                className="bg-white dark:bg-dark_black rounded-xl border border-dark_black/10 dark:border-white/10 overflow-hidden"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-dark_black/5 dark:hover:bg-white/5 transition-colors"
                 >
-                  <span className="font-semibold text-lg">{faq.q}</span>
-                  <ChevronDown className={`w-5 h-5 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
+                  <span className="font-medium text-lg">{faq.q}</span>
+                  <span className={`text-2xl transition-transform ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
                 </button>
                 {openFaq === i && (
-                  <div className="px-6 pb-6 text-gray-600">
+                  <div className="px-6 pb-6 text-dark_black/70 dark:text-white/70">
                     {faq.a}
                   </div>
                 )}
@@ -437,111 +494,129 @@ export default function Home() {
       <section id="contact" className="py-24">
         <div className="container">
           <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Ready to get started?
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="font-medium mb-4">
+                Ready to get <span className="instrument-font italic font-normal dark:text-white/70">started?</span>
               </h2>
-              <p className="text-xl text-gray-600">
+              <p className="text-xl text-dark_black/60 dark:text-white/60">
                 Tell us about your project. We'll get back to you within 24 hours.
               </p>
-            </div>
+            </motion.div>
 
             {!formSubmitted ? (
-              <form 
-                name="contact"
-                method="POST"
-                data-netlify="true"
-                data-netlify-honeypot="bot-field"
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  const form = e.target as HTMLFormElement
-                  fetch('/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams(new FormData(form) as any).toString()
-                  })
-                  .then(() => setFormSubmitted(true))
-                  .catch((err) => alert('Error: ' + err))
-                }}
-                className="space-y-6"
-              >
-                <input type="hidden" name="form-name" value="contact" />
-                <p className="hidden">
-                  <label>Don't fill this out: <input name="bot-field" /></label>
-                </p>
+              <div className="bg-white dark:bg-dark_black rounded-2xl p-8 shadow-xl border border-dark_black/10 dark:border-white/10">
+                <form 
+                  name="contact"
+                  method="POST"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    const form = e.target as HTMLFormElement
+                    fetch('/', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                      body: new URLSearchParams(new FormData(form) as any).toString()
+                    })
+                    .then(() => setFormSubmitted(true))
+                    .catch((err) => alert('Error: ' + err))
+                  }}
+                  className="space-y-6"
+                >
+                  <input type="hidden" name="form-name" value="contact" />
+                  <p className="hidden">
+                    <label>Don't fill this out: <input name="bot-field" /></label>
+                  </p>
 
-                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Name *</label>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
+                        placeholder="Your name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Email *</label>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
+                        placeholder="you@business.com"
+                      />
+                    </div>
+                  </div>
+
                   <div>
-                    <label className="block text-sm font-medium mb-2">Name *</label>
+                    <label className="block text-sm font-medium mb-2">Business name</label>
                     <input
                       type="text"
-                      name="name"
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-accent focus:outline-none transition-colors"
-                      placeholder="Your name"
+                      name="business"
+                      value={formData.business}
+                      onChange={(e) => setFormData({...formData, business: e.target.value})}
+                      className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
+                      placeholder="Your business name"
                     />
                   </div>
+
                   <div>
-                    <label className="block text-sm font-medium mb-2">Email *</label>
-                    <input
-                      type="email"
-                      name="email"
+                    <label className="block text-sm font-medium mb-2">What do you need? *</label>
+                    <select
+                      name="service"
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-accent focus:outline-none transition-colors"
-                      placeholder="you@business.com"
+                      value={formData.service}
+                      onChange={(e) => setFormData({...formData, service: e.target.value})}
+                      className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
+                    >
+                      <option value="">Select an option</option>
+                      <option value="free-website">Free website offer</option>
+                      <option value="custom-website">Custom website</option>
+                      <option value="redesign">Website redesign</option>
+                      <option value="other">Something else</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Tell us about your project</label>
+                    <textarea
+                      name="message"
+                      rows={4}
+                      value={formData.message}
+                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
+                      placeholder="What does your business do? What are your goals?"
                     />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium mb-2">Business name</label>
-                  <input
-                    type="text"
-                    name="business"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-accent focus:outline-none transition-colors"
-                    placeholder="Your business name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">What do you need? *</label>
-                  <select
-                    name="service"
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-accent focus:outline-none transition-colors"
+                  <button
+                    type="submit"
+                    className="w-full bg-purple_blue text-white font-medium py-4 rounded-lg hover:bg-purple_blue/90 transition-colors flex items-center justify-center gap-2"
                   >
-                    <option value="">Select an option</option>
-                    <option value="free-website">Free website offer</option>
-                    <option value="custom-website">Custom website</option>
-                    <option value="redesign">Website redesign</option>
-                    <option value="other">Something else</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Tell us about your project</label>
-                  <textarea
-                    name="message"
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-accent focus:outline-none transition-colors"
-                    placeholder="What does your business do? What are your goals?"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-accent text-white font-medium py-4 rounded-lg hover:bg-accent-light transition-colors"
-                >
-                  Send message →
-                </button>
-              </form>
+                    Send message
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </form>
+              </div>
             ) : (
-              <div className="text-center py-12 bg-green-50 rounded-2xl">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Check className="w-8 h-8 text-green-600" />
+              <div className="text-center py-12 bg-dark_black/5 dark:bg-white/5 rounded-2xl">
+                <div className="w-16 h-16 bg-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-green" />
                 </div>
-                <h3 className="text-2xl font-semibold mb-2">Message sent!</h3>
-                <p className="text-gray-600">
+                <h3 className="text-2xl font-medium mb-2">Message sent!</h3>
+                <p className="text-dark_black/60 dark:text-white/60">
                   We'll get back to you within 24 hours.
                 </p>
               </div>
@@ -551,20 +626,20 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-gray-100">
+      <footer className="py-12 border-t border-dark_black/10 dark:border-white/10">
         <div className="container">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-xl font-bold">
-              MyWebsiteBuilder<span className="text-accent">.ca</span>
+            <div className="text-xl font-semibold text-dark_black dark:text-white">
+              MyWebsiteBuilder<span className="instrument-font italic text-purple_blue">.ca</span>
             </div>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-dark_black/50 dark:text-white/50">
               © 2026 MyWebsiteBuilder.ca — A subsidiary of{' '}
-              <Link href="https://mybuilder.ca" className="text-accent hover:underline">
+              <Link href="https://mybuilder.ca" className="text-purple_blue hover:underline">
                 MyBuilder
               </Link>
             </p>
-            <div className="flex items-center gap-6 text-sm text-gray-500">
-              <Link href="mailto:hello@mybuilder.ca" className="hover:text-primary transition-colors">
+            <div className="flex items-center gap-6 text-sm text-dark_black/50 dark:text-white/50">
+              <Link href="mailto:hello@mybuilder.ca" className="hover:text-purple_blue transition-colors">
                 hello@mybuilder.ca
               </Link>
             </div>
