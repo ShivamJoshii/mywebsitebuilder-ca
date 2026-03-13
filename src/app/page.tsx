@@ -155,10 +155,10 @@ export default function Home() {
                 FAQ
               </Link>
               <Link
-                href="/apply"
+                href="#quick-form"
                 className="group bg-purple_blue text-white font-medium flex items-center gap-2 py-2 px-5 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
-                Get Started
+                Free Assessment
                 <svg width="20" height="20" viewBox="0 0 40 40" fill="none" className="transform transition-transform group-hover:rotate-45">
                   <rect width="40" height="40" rx="20" className="fill-white group-hover:fill-purple_blue transition-colors"/>
                   <path d="M15.832 15.3334H24.1654V23.6667" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -190,8 +190,8 @@ export default function Home() {
               <Link href="#faq" className="block text-dark_black/70 dark:text-white/70" onClick={() => setMobileMenu(false)}>
                 FAQ
               </Link>
-              <Link href="/apply" className="block text-purple_blue font-medium" onClick={() => setMobileMenu(false)}>
-                Get Started →
+              <Link href="#quick-form" className="block text-purple_blue font-medium" onClick={() => setMobileMenu(false)}>
+                Free Assessment →
               </Link>
             </div>
           </div>
@@ -210,10 +210,10 @@ export default function Home() {
             variants={staggerContainer}
             className="max-w-4xl mx-auto text-center"
           >
-            {/* Pain Badge */}
+            {/* Scarcity Badge */}
             <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red/10 text-red text-sm font-medium mb-8">
               <span className="w-2 h-2 rounded-full bg-red animate-pulse" />
-              Stop losing customers to your competitors
+              Only 3 free websites available this month
             </motion.div>
 
             {/* Pain Headline */}
@@ -245,11 +245,10 @@ export default function Home() {
                 </svg>
               </Link>
               <Link
-                href="#calendar"
+                href="/apply"
                 className="group bg-transparent border border-dark_black dark:border-white/50 text-dark_black dark:text-white font-medium flex items-center gap-2 py-3 px-5 rounded-full transition-all hover:bg-dark_black hover:text-white dark:hover:bg-white dark:hover:text-dark_black"
               >
-                <Clock className="w-4 h-4" />
-                <span>Book Express Call (15 min)</span>
+                <span>See If I Qualify →</span>
               </Link>
             </motion.div>
 
@@ -257,15 +256,15 @@ export default function Home() {
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm text-dark_black/50 dark:text-white/50">
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-green" />
-                <span>No credit card required</span>
+                <span>50+ websites launched</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green" />
+                <span>Average 3x lead increase</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-green" />
                 <span>48-hour delivery guarantee</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green" />
-                <span>Don't pay if you're not happy</span>
               </div>
             </motion.div>
           </motion.div>
@@ -317,42 +316,122 @@ export default function Home() {
               href="/apply"
               className="group inline-flex items-center gap-3 bg-purple_blue text-white font-medium py-3 px-8 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
             >
-              Let's Fix This →
+              Get My Free Assessment →
             </Link>
+            <p className="text-sm text-dark_black/50 dark:text-white/50 mt-4">
+              Only 3 spots left this month • No credit card required
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Calendar Booking Section */}
-      <section id="calendar" className="py-24">
+      {/* Inline Form Section */}
+      <section id="quick-form" className="py-24">
         <div className="container">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-2xl mx-auto">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green/10 text-green text-sm font-medium mb-6">
-                <Clock className="w-4 h-4" />
-                Express Response
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red/10 text-red text-sm font-medium mb-6">
+                ⚡ Limited spots available
               </span>
               <h2 className="font-medium mb-4">
-                Book a <span className="instrument-font italic font-normal dark:text-white/70">15-minute call</span>
+                Get your free website assessment
               </h2>
               <p className="text-xl text-dark_black/60 dark:text-white/60">
-                No forms. No back-and-forth emails. Pick a time that works for you and we'll call you.
+                Takes 2 minutes. We'll analyze your current site and show you exactly how to fix it.
               </p>
             </motion.div>
 
-            <div className="bg-white dark:bg-dark_black rounded-2xl shadow-xl border border-dark_black/10 dark:border-white/10 overflow-hidden">
-              <iframe 
-                src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2hkzZr-aMGxNbQOI2afBAvcZauqQFj3pd96dOe3BN9F5wUUh6icE2KM3jq4BQYuEMa7EDiYIAr?gv=true" 
-                style={{ border: 0 }} 
-                width="100%" 
-                height="600" 
-                frameBorder="0"
-              />
+            <div className="bg-white dark:bg-dark_black rounded-2xl p-8 shadow-xl border border-dark_black/10 dark:border-white/10">
+              <form 
+                name="quick-assessment"
+                method="POST"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  const form = e.target as HTMLFormElement
+                  fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(new FormData(form) as any).toString()
+                  })
+                  .then(() => alert('Thanks! We\'ll send your assessment within 24 hours.'))
+                  .catch((err) => alert('Error: ' + err))
+                }}
+                className="space-y-6"
+              >
+                <input type="hidden" name="form-name" value="quick-assessment" />
+                <p className="hidden">
+                  <label>Don't fill this out: <input name="bot-field" /></label>
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Name *</label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Email *</label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
+                      placeholder="you@business.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Website (if you have one)</label>
+                  <input
+                    type="url"
+                    name="website"
+                    className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
+                    placeholder="https://yourbusiness.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">What's your biggest website problem? *</label>
+                  <select
+                    name="problem"
+                    required
+                    className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
+                  >
+                    <option value="">Select your biggest pain point</option>
+                    <option value="slow">My site is too slow</option>
+                    <option value="mobile">Doesn't work on mobile</option>
+                    <option value="ugly">Looks outdated/amateur</option>
+                    <option value="no-leads">Not generating leads</option>
+                    <option value="no-site">Don't have a website yet</option>
+                    <option value="other">Something else</option>
+                  </select>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-purple_blue text-white font-medium py-4 rounded-lg hover:bg-purple_blue/90 transition-colors flex items-center justify-center gap-2"
+                >
+                  Get My Free Assessment
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+
+                <p className="text-center text-sm text-dark_black/50 dark:text-white/50">
+                  🔒 We respect your privacy. No spam, ever.
+                </p>
+              </form>
             </div>
           </div>
         </div>
