@@ -75,22 +75,22 @@ const steps = [
   }
 ]
 
-// Testimonials
+// Testimonials - Pain-focused
 const testimonials = [
   {
-    quote: "They built our clinic website in 48 hours. Professional, fast, and exactly what we needed.",
+    quote: "I wasted $3,000 on a developer who ghosted me. These guys delivered in 48 hours and it looked better than what I paid for before.",
     author: "Dr. Sarah Chen",
     role: "Family Practice",
     rating: 5
   },
   {
-    quote: "Finally a web team that understands small business. No jargon, just results.",
+    quote: "My old site took 10 seconds to load. I was losing customers and didn't even know why. New site loads in 1.5 seconds and my leads doubled.",
     author: "Mike Rodriguez",
     role: "Owner, Rodriguez Landscaping",
     rating: 5
   },
   {
-    quote: "Our booking requests tripled after the new site launched. Worth every penny.",
+    quote: "I built my site on Wix and it looked amateur. Customers told me they chose my competitor because their site looked more professional. Not anymore.",
     author: "Jennifer Walsh",
     role: "Salon Owner",
     rating: 5
@@ -198,7 +198,7 @@ export default function Home() {
         )}
       </nav>
 
-      {/* Hero */}
+      {/* Hero - Pain Focused */}
       <section className="relative pt-44 pb-20 overflow-hidden">
         {/* Background gradient (same as mybuilder.ca) */}
         <div className="absolute inset-0 before:absolute before:w-full before:h-full before:bg-linear-to-r before:from-blue_gradient before:via-white before:to-yellow_gradient before:rounded-full before:top-24 before:blur-3xl before:-z-10 dark:before:from-dark_blue_gradient dark:before:via-black dark:before:to-dark_yellow_gradient" />
@@ -210,23 +210,23 @@ export default function Home() {
             variants={staggerContainer}
             className="max-w-4xl mx-auto text-center"
           >
-            {/* Badge */}
-            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple_blue/10 text-purple_blue text-sm font-medium mb-8">
-              <span className="w-2 h-2 rounded-full bg-green animate-pulse" />
-              Now serving clients worldwide
+            {/* Pain Badge */}
+            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red/10 text-red text-sm font-medium mb-8">
+              <span className="w-2 h-2 rounded-full bg-red animate-pulse" />
+              Stop losing customers to your competitors
             </motion.div>
 
-            {/* Headline */}
+            {/* Pain Headline */}
             <motion.h1 variants={fadeInUp} className="font-medium mb-6">
-              Professional websites for{' '}
-              <span className="instrument-font italic font-normal dark:text-white/70">
-                businesses worldwide
+              Your website is costing you{' '}
+              <span className="instrument-font italic font-normal text-red">
+                thousands in lost revenue
               </span>
             </motion.h1>
 
-            {/* Subheadline */}
+            {/* Pain Subheadline */}
             <motion.p variants={fadeInUp} className="text-xl text-dark_black/60 dark:text-white/60 max-w-2xl mx-auto mb-10">
-              Fast, modern, and built to convert. We handle everything from design to launch so you can focus on your business.
+              75% of customers judge your credibility based on your website. If it looks outdated, loads slowly, or doesn't work on mobile, they're going to your competitor. We fix this in 48 hours.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -236,7 +236,7 @@ export default function Home() {
                 className="group bg-purple_blue text-white font-medium flex items-center gap-3 py-3 px-6 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
                 <span className="transform transition-transform group-hover:translate-x-1">
-                  Apply in 2 minutes
+                  Get My Free Website Assessment
                 </span>
                 <svg width="32" height="32" viewBox="0 0 40 40" fill="none" className="transform transition-transform group-hover:rotate-45">
                   <rect width="40" height="40" rx="20" className="fill-white group-hover:fill-purple_blue transition-colors"/>
@@ -245,11 +245,11 @@ export default function Home() {
                 </svg>
               </Link>
               <Link
-                href="#services"
+                href="#calendar"
                 className="group bg-transparent border border-dark_black dark:border-white/50 text-dark_black dark:text-white font-medium flex items-center gap-2 py-3 px-5 rounded-full transition-all hover:bg-dark_black hover:text-white dark:hover:bg-white dark:hover:text-dark_black"
               >
-                <span>See our services</span>
-                <ArrowRight className="w-4 h-4" />
+                <Clock className="w-4 h-4" />
+                <span>Book Express Call (15 min)</span>
               </Link>
             </motion.div>
 
@@ -257,18 +257,104 @@ export default function Home() {
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm text-dark_black/50 dark:text-white/50">
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-green" />
-                <span>Free option available</span>
+                <span>No credit card required</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-green" />
-                <span>48-hour delivery</span>
+                <span>48-hour delivery guarantee</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-green" />
-                <span>Serving clients worldwide</span>
+                <span>Don't pay if you're not happy</span>
               </div>
             </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Pain Points Section */}
+      <section className="py-24 bg-dark_black/5 dark:bg-white/5">
+        <div className="container">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-medium mb-4">
+              Sound <span className="instrument-font italic font-normal text-red">familiar?</span>
+            </h2>
+            <p className="text-xl text-dark_black/60 dark:text-white/60 max-w-2xl mx-auto">
+              We've heard these stories from hundreds of business owners
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {[
+              { text: "I paid $3,000 for a website and the developer disappeared", icon: "💸" },
+              { text: "My site takes 8 seconds to load and customers bounce", icon: "⏱️" },
+              { text: "I built it myself on Wix and it looks amateur", icon: "😤" },
+              { text: "I don't have time to figure this out myself", icon: "😵" },
+              { text: "My competitor's site looks way more professional", icon: "😰" },
+              { text: "I know I'm losing customers but don't know where to start", icon: "🤷" },
+            ].map((pain, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="p-6 rounded-xl bg-white dark:bg-dark_black border border-dark_black/10 dark:border-white/10 text-center"
+              >
+                <div className="text-4xl mb-4">{pain.icon}</div>
+                <p className="text-dark_black/80 dark:text-white/80">"{pain.text}"</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              href="/apply"
+              className="group inline-flex items-center gap-3 bg-purple_blue text-white font-medium py-3 px-8 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
+            >
+              Let's Fix This →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Calendar Booking Section */}
+      <section id="calendar" className="py-24">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green/10 text-green text-sm font-medium mb-6">
+                <Clock className="w-4 h-4" />
+                Express Response
+              </span>
+              <h2 className="font-medium mb-4">
+                Book a <span className="instrument-font italic font-normal dark:text-white/70">15-minute call</span>
+              </h2>
+              <p className="text-xl text-dark_black/60 dark:text-white/60">
+                No forms. No back-and-forth emails. Pick a time that works for you and we'll call you.
+              </p>
+            </motion.div>
+
+            <div className="bg-white dark:bg-dark_black rounded-2xl shadow-xl border border-dark_black/10 dark:border-white/10 overflow-hidden">
+              <iframe 
+                src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2hkzZr-aMGxNbQOI2afBAvcZauqQFj3pd96dOe3BN9F5wUUh6icE2KM3jq4BQYuEMa7EDiYIAr?gv=true" 
+                style={{ border: 0 }} 
+                width="100%" 
+                height="600" 
+                frameBorder="0"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -287,7 +373,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services */}
+      {/* Services - Pain-Focused */}
       <section id="services" className="py-24">
         <div className="container">
           <motion.div 
@@ -297,16 +383,37 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="font-medium mb-4">
-              Everything you need to{' '}
-              <span className="instrument-font italic font-normal dark:text-white/70">succeed online</span>
+              We solve the problems that{' '}
+              <span className="instrument-font italic font-normal text-red">keep you up at night</span>
             </h2>
             <p className="text-xl text-dark_black/60 dark:text-white/60 max-w-2xl mx-auto">
-              No templates. No bloated plugins. Just clean, fast websites that work.
+              Every feature we build addresses a specific pain point that costs you customers
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((f, i) => (
+            {[
+              {
+                icon: Zap,
+                title: 'Stop Losing Mobile Customers',
+                desc: '53% of mobile visitors leave if your site takes longer than 3 seconds to load. We build sub-2-second sites.'
+              },
+              {
+                icon: Smartphone,
+                title: 'Capture Mobile Traffic',
+                desc: '60% of searches are on mobile. If your site isn\'t mobile-optimized, you\'re invisible to most customers.'
+              },
+              {
+                icon: Search,
+                title: 'Get Found on Google',
+                desc: 'Technical SEO built-in from day one. No more wondering why competitors rank higher than you.'
+              },
+              {
+                icon: Shield,
+                title: 'Sleep Easy at Night',
+                desc: 'SSL, backups, and monitoring included. No more worrying about your site going down or getting hacked.'
+              }
+            ].map((f, i) => (
               <motion.div
                 key={f.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -326,38 +433,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Free Website CTA */}
+      {/* Risk Reversal CTA */}
       <section id="free-website" className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple_blue/10 via-transparent to-yellow_gradient/20" />
         
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <span className="inline-block px-4 py-2 rounded-full bg-purple_blue/10 text-purple_blue text-sm font-medium mb-6">
-              Limited time offer
+            <span className="inline-block px-4 py-2 rounded-full bg-red/10 text-red text-sm font-medium mb-6">
+              We take all the risk
             </span>
             <h2 className="font-medium mb-6">
-              Get a website built for{' '}
-              <span className="instrument-font italic font-normal dark:text-white/70">free</span>
+              Professional website in 48 hours{' '}
+              <span className="instrument-font italic font-normal text-red">or you don't pay</span>
             </h2>
             <p className="text-xl text-dark_black/60 dark:text-white/60 max-w-2xl mx-auto mb-10">
-              Yes, actually free. No credit card, no hidden fees, no catch. We build you a professional website in 48 hours because we believe in proving our value first.
+              We're so confident you'll love your new site that we don't take payment until after delivery. No deposits. No contracts. No bullshit. If you don't love it, walk away.
             </p>
 
             <div className="grid md:grid-cols-3 gap-6 text-left mb-12">
               <div className="p-6 rounded-xl bg-white dark:bg-white/5 border border-dark_black/10 dark:border-white/10">
                 <Check className="w-6 h-6 text-green mb-4" />
-                <h3 className="font-medium mb-2">Custom design</h3>
-                <p className="text-dark_black/60 dark:text-white/60 text-sm">Not a template. Built for your brand.</p>
+                <h3 className="font-medium mb-2">No deposit required</h3>
+                <p className="text-dark_black/60 dark:text-white/60 text-sm">We build first, you pay only if you're happy.</p>
               </div>
               <div className="p-6 rounded-xl bg-white dark:bg-white/5 border border-dark_black/10 dark:border-white/10">
                 <Check className="w-6 h-6 text-green mb-4" />
-                <h3 className="font-medium mb-2">Mobile optimized</h3>
-                <p className="text-dark_black/60 dark:text-white/60 text-sm">Looks perfect on every device.</p>
+                <h3 className="font-medium mb-2">48-hour guarantee</h3>
+                <p className="text-dark_black/60 dark:text-white/60 text-sm">Miss the deadline? It's free. Period.</p>
               </div>
               <div className="p-6 rounded-xl bg-white dark:bg-white/5 border border-dark_black/10 dark:border-white/10">
                 <Check className="w-6 h-6 text-green mb-4" />
-                <h3 className="font-medium mb-2">Ready to launch</h3>
-                <p className="text-dark_black/60 dark:text-white/60 text-sm">We handle hosting and setup.</p>
+                <h3 className="font-medium mb-2">You own everything</h3>
+                <p className="text-dark_black/60 dark:text-white/60 text-sm">Code, design, content. All yours. No lock-in.</p>
               </div>
             </div>
 
@@ -365,7 +472,7 @@ export default function Home() {
               href="/apply"
               className="group inline-flex items-center gap-3 bg-purple_blue text-white font-medium py-3 px-8 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
             >
-              Apply in 2 minutes
+              Get My Free Assessment
               <svg width="32" height="32" viewBox="0 0 40 40" fill="none" className="transform transition-transform group-hover:rotate-45">
                 <rect width="40" height="40" rx="20" className="fill-white group-hover:fill-purple_blue transition-colors"/>
                 <path d="M15.832 15.3334H24.1654V23.6667" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
