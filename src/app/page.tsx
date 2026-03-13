@@ -125,6 +125,7 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [mobileMenu, setMobileMenu] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [showCalendar, setShowCalendar] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -244,12 +245,13 @@ export default function Home() {
                   <path d="M15.832 23.6667L24.1654 15.3334" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </Link>
-              <Link
-                href="/apply"
+              <button
+                onClick={() => setShowCalendar(true)}
                 className="group bg-transparent border border-dark_black dark:border-white/50 text-dark_black dark:text-white font-medium flex items-center gap-2 py-3 px-5 rounded-full transition-all hover:bg-dark_black hover:text-white dark:hover:bg-white dark:hover:text-dark_black"
               >
-                <span>See If I Qualify →</span>
-              </Link>
+                <Clock className="w-4 h-4" />
+                <span>Book a Call</span>
+              </button>
             </motion.div>
 
             {/* Trust indicators */}
@@ -432,10 +434,61 @@ export default function Home() {
                   🔒 We respect your privacy. No spam, ever.
                 </p>
               </form>
+
+              {/* Divider */}
+              <div className="relative my-8">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-dark_black/10 dark:border-white/10"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white dark:bg-dark_black text-dark_black/50 dark:text-white/50">or</span>
+                </div>
+              </div>
+
+              {/* Book a Call Button */}
+              <button
+                onClick={() => setShowCalendar(true)}
+                className="w-full bg-transparent border-2 border-purple_blue text-purple_blue font-medium py-4 rounded-lg hover:bg-purple_blue hover:text-white transition-colors flex items-center justify-center gap-2"
+              >
+                <Clock className="w-5 h-5" />
+                Book a 15-Minute Call
+              </button>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Calendar Popup Modal */}
+      {showCalendar && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-dark_black rounded-2xl shadow-2xl overflow-hidden">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-dark_black/10 dark:border-white/10">
+              <div>
+                <h3 className="text-lg font-medium">Book Your Call</h3>
+                <p className="text-sm text-dark_black/60 dark:text-white/60">Pick a time that works for you</p>
+              </div>
+              <button
+                onClick={() => setShowCalendar(false)}
+                className="p-2 hover:bg-dark_black/10 dark:hover:bg-white/10 rounded-lg transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            {/* Calendar iframe */}
+            <div className="h-[600px]">
+              <iframe 
+                src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2hkzZr-aMGxNbQOI2afBAvcZauqQFj3pd96dOe3BN9F5wUUh6icE2KM3jq4BQYuEMa7EDiYIAr?gv=true" 
+                style={{ border: 0 }} 
+                width="100%" 
+                height="100%" 
+                frameBorder="0"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Logos */}
       <section className="py-12 border-y border-dark_black/10 dark:border-white/10">
