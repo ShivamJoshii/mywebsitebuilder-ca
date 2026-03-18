@@ -224,7 +224,7 @@ export default function Home() {
             {/* CTA Buttons */}
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="#quick-form"
+                href="/apply"
                 className="group bg-purple_blue text-white font-medium flex items-center gap-3 py-3 px-6 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
                 <span className="transform transition-transform group-hover:translate-x-1">
