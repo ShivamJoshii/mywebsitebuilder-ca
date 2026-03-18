@@ -312,6 +312,22 @@ export default function ApplyPage() {
             </div>
           </div>
           
+          {/* Book a Call CTA */}
+          <div className="text-center mb-6">
+            <p className="text-dark_black/60 dark:text-white/60 mb-4">
+              Want to discuss your project sooner?
+            </p>
+            <a
+              href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2hkzZr-aMGxNbQOI2afBAvcZauqQFj3pd96dOe3BN9F5wUUh6icE2KM3jq4BQYuEMa7EDiYIAr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-purple_blue text-white font-medium px-8 py-4 rounded-full hover:bg-purple_blue/90 transition-colors"
+            >
+              <Clock className="w-5 h-5" />
+              Book a 15-Minute Call
+            </a>
+          </div>
+
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-purple_blue hover:underline"
