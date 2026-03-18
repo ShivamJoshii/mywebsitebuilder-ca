@@ -159,7 +159,7 @@ export default function Home() {
                 href="#quick-form"
                 className="group bg-purple_blue text-white font-medium flex items-center gap-2 py-2 px-5 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
-                Free Assessment
+                Apply Now
                 <svg width="20" height="20" viewBox="0 0 40 40" fill="none" className="transform transition-transform group-hover:rotate-45">
                   <rect width="40" height="40" rx="20" className="fill-white group-hover:fill-purple_blue transition-colors"/>
                   <path d="M15.832 15.3334H24.1654V23.6667" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -192,7 +192,7 @@ export default function Home() {
                 FAQ
               </Link>
               <Link href="#quick-form" className="block text-purple_blue font-medium" onClick={() => setMobileMenu(false)}>
-                Free Assessment →
+                Apply Now →
               </Link>
             </div>
           </div>
@@ -233,11 +233,11 @@ export default function Home() {
             {/* CTA Buttons */}
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="/apply"
+                href="#quick-form"
                 className="group bg-purple_blue text-white font-medium flex items-center gap-3 py-3 px-6 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
                 <span className="transform transition-transform group-hover:translate-x-1">
-                  Get My Free Website Assessment
+                  Get My Free Website
                 </span>
                 <svg width="32" height="32" viewBox="0 0 40 40" fill="none" className="transform transition-transform group-hover:rotate-45">
                   <rect width="40" height="40" rx="20" className="fill-white group-hover:fill-purple_blue transition-colors"/>
@@ -315,10 +315,10 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <Link
-              href="/apply"
+              href="#quick-form"
               className="group inline-flex items-center gap-3 bg-purple_blue text-white font-medium py-3 px-8 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
             >
-              Get My Free Assessment →
+              Apply Now →
             </Link>
             <p className="text-sm text-dark_black/50 dark:text-white/50 mt-4">
               Only 3 spots left this month • No credit card required
@@ -341,10 +341,10 @@ export default function Home() {
                 ⚡ Limited spots available
               </span>
               <h2 className="font-medium mb-4">
-                Get your free website assessment
+                Get your free website
               </h2>
               <p className="text-xl text-dark_black/60 dark:text-white/60">
-                Takes 2 minutes. We'll analyze your current site and show you exactly how to fix it.
+                Takes 2 minutes. Tell us about your business and we'll build you a professional website in 48 hours.
               </p>
             </motion.div>
 
@@ -426,7 +426,7 @@ export default function Home() {
                   type="submit"
                   className="w-full bg-purple_blue text-white font-medium py-4 rounded-lg hover:bg-purple_blue/90 transition-colors flex items-center justify-center gap-2"
                 >
-                  Get My Free Assessment
+                  Apply Now
                   <ArrowRight className="w-5 h-5" />
                 </button>
 
