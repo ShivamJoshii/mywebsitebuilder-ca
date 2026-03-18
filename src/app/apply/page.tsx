@@ -1,9 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import Script from 'next/script'
 import { ArrowRight, ArrowLeft, Check, Building2, Briefcase, FileText, Globe, User, Mail, Phone, DollarSign, Clock, Star, TrendingUp } from 'lucide-react'
+
+// Facebook Pixel tracking helper
+const trackPixelEvent = (eventName: string, params?: Record<string, any>) => {
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', eventName, params)
+  }
+}
 
 // Animation variants
 const slideVariants = {
@@ -171,6 +179,12 @@ export default function ApplyPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
+  // Track page view on mount
+  useEffect(() => {
+    trackPixelEvent('PageView')
+    trackPixelEvent('Lead', { step: 1, total_steps: steps.length })
+  }, [])
+
   const currentStepData = steps[currentStep]
   const progress = ((currentStep + 1) / steps.length) * 100
 
@@ -178,6 +192,8 @@ export default function ApplyPage() {
     if (currentStep < steps.length - 1) {
       setDirection(1)
       setCurrentStep(currentStep + 1)
+      // Track step completion
+      trackPixelEvent('Lead', { step: currentStep + 1, total_steps: steps.length })
     }
   }
 
@@ -213,6 +229,12 @@ export default function ApplyPage() {
       })
 
       setIsSubmitted(true)
+      // Track successful form submission
+      trackPixelEvent('CompleteRegistration', {
+        content_name: 'Website Application',
+        status: true,
+        revenue: 0
+      })
     } catch (error) {
       console.error('Submission error:', error)
       alert('There was an error submitting your application. Please try again.')

@@ -13,7 +13,6 @@ import {
   Clock,
   Star,
   Menu,
-  X,
   CheckCircle2
 } from 'lucide-react'
 
@@ -125,7 +124,6 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [mobileMenu, setMobileMenu] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
-  const [showCalendar, setShowCalendar] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -156,7 +154,7 @@ export default function Home() {
                 FAQ
               </Link>
               <Link
-                href="#quick-form"
+                href="/apply"
                 className="group bg-purple_blue text-white font-medium flex items-center gap-2 py-2 px-5 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
                 Apply Now
@@ -191,7 +189,7 @@ export default function Home() {
               <Link href="#faq" className="block text-dark_black/70 dark:text-white/70" onClick={() => setMobileMenu(false)}>
                 FAQ
               </Link>
-              <Link href="#quick-form" className="block text-purple_blue font-medium" onClick={() => setMobileMenu(false)}>
+              <Link href="/apply" className="block text-purple_blue font-medium" onClick={() => setMobileMenu(false)}>
                 Apply Now →
               </Link>
             </div>
@@ -245,13 +243,13 @@ export default function Home() {
                   <path d="M15.832 23.6667L24.1654 15.3334" stroke="#1B1D1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </Link>
-              <button
-                onClick={() => setShowCalendar(true)}
+              <Link
+                href="/apply"
                 className="group bg-transparent border border-dark_black dark:border-white/50 text-dark_black dark:text-white font-medium flex items-center gap-2 py-3 px-5 rounded-full transition-all hover:bg-dark_black hover:text-white dark:hover:bg-white dark:hover:text-dark_black"
               >
                 <Clock className="w-4 h-4" />
                 <span>Book a Call</span>
-              </button>
+              </Link>
             </motion.div>
 
             {/* Trust indicators */}
@@ -315,7 +313,7 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <Link
-              href="#quick-form"
+              href="/apply"
               className="group inline-flex items-center gap-3 bg-purple_blue text-white font-medium py-3 px-8 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
             >
               Apply Now →
@@ -327,168 +325,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Inline Form Section */}
-      <section id="quick-form" className="py-24">
-        <div className="container">
-          <div className="max-w-2xl mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red/10 text-red text-sm font-medium mb-6">
-                ⚡ Limited spots available
-              </span>
-              <h2 className="font-medium mb-4">
-                Get your free website
-              </h2>
-              <p className="text-xl text-dark_black/60 dark:text-white/60">
-                Takes 2 minutes. Tell us about your business and we'll build you a professional website in 48 hours.
-              </p>
-            </motion.div>
 
-            <div className="bg-white dark:bg-dark_black rounded-2xl p-8 shadow-xl border border-dark_black/10 dark:border-white/10">
-              <form 
-                name="quick-assessment"
-                method="POST"
-                data-netlify="true"
-                data-netlify-honeypot="bot-field"
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  const form = e.target as HTMLFormElement
-                  fetch('/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams(new FormData(form) as any).toString()
-                  })
-                  .then(() => alert('Thanks! We\'ll send your assessment within 24 hours.'))
-                  .catch((err) => alert('Error: ' + err))
-                }}
-                className="space-y-6"
-              >
-                <input type="hidden" name="form-name" value="quick-assessment" />
-                <p className="hidden">
-                  <label>Don't fill this out: <input name="bot-field" /></label>
-                </p>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Name *</label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Email *</label>
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
-                      placeholder="you@business.com"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Website (if you have one)</label>
-                  <input
-                    type="url"
-                    name="website"
-                    className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
-                    placeholder="https://yourbusiness.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">What's your biggest website problem? *</label>
-                  <select
-                    name="problem"
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-dark_black/20 dark:border-white/20 bg-transparent focus:outline-none focus:border-purple_blue transition-colors"
-                  >
-                    <option value="">Select your biggest pain point</option>
-                    <option value="slow">My site is too slow</option>
-                    <option value="mobile">Doesn't work on mobile</option>
-                    <option value="ugly">Looks outdated/amateur</option>
-                    <option value="no-leads">Not generating leads</option>
-                    <option value="no-site">Don't have a website yet</option>
-                    <option value="other">Something else</option>
-                  </select>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-purple_blue text-white font-medium py-4 rounded-lg hover:bg-purple_blue/90 transition-colors flex items-center justify-center gap-2"
-                >
-                  Apply Now
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-
-                <p className="text-center text-sm text-dark_black/50 dark:text-white/50">
-                  🔒 We respect your privacy. No spam, ever.
-                </p>
-              </form>
-
-              {/* Divider */}
-              <div className="relative my-8">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-dark_black/10 dark:border-white/10"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white dark:bg-dark_black text-dark_black/50 dark:text-white/50">or</span>
-                </div>
-              </div>
-
-              {/* Book a Call Button */}
-              <button
-                onClick={() => setShowCalendar(true)}
-                className="w-full bg-transparent border-2 border-purple_blue text-purple_blue font-medium py-4 rounded-lg hover:bg-purple_blue hover:text-white transition-colors flex items-center justify-center gap-2"
-              >
-                <Clock className="w-5 h-5" />
-                Book a 15-Minute Call
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Calendar Popup Modal */}
-      {showCalendar && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-dark_black rounded-2xl shadow-2xl overflow-hidden">
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-dark_black/10 dark:border-white/10">
-              <div>
-                <h3 className="text-lg font-medium">Book Your Call</h3>
-                <p className="text-sm text-dark_black/60 dark:text-white/60">Pick a time that works for you</p>
-              </div>
-              <button
-                onClick={() => setShowCalendar(false)}
-                className="p-2 hover:bg-dark_black/10 dark:hover:bg-white/10 rounded-lg transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            
-            {/* Calendar iframe */}
-            <div className="h-[600px]">
-              <iframe 
-                src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2hkzZr-aMGxNbQOI2afBAvcZauqQFj3pd96dOe3BN9F5wUUh6icE2KM3jq4BQYuEMa7EDiYIAr?gv=true" 
-                style={{ border: 0 }} 
-                width="100%" 
-                height="100%" 
-                frameBorder="0"
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Logos */}
       <section className="py-12 border-y border-dark_black/10 dark:border-white/10">
