@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, ArrowLeft, Check, Building2, Briefcase, FileText, Globe, User, Mail, Phone, DollarSign, Clock, Star, TrendingUp } from 'lucide-react'
@@ -192,11 +193,11 @@ const testimonials = [
 ]
 
 export default function ApplyPage() {
+  const router = useRouter()
   const [currentStep, setCurrentStep] = useState(0)
   const [direction, setDirection] = useState(0)
   const [formData, setFormData] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
 
   // Track page view on mount
   useEffect(() => {
@@ -259,7 +260,6 @@ export default function ApplyPage() {
         body: new URLSearchParams(form as any).toString()
       })
 
-      setIsSubmitted(true)
       // Track successful form submission
       trackPixelEvent('CompleteRegistration', {
         content_name: 'Website Application',
@@ -273,10 +273,17 @@ export default function ApplyPage() {
         value: 0,
         currency: 'CAD'
       })
+      
+      // Store applicant name for the success page
+      if (formData.name) {
+        sessionStorage.setItem('applicantName', formData.name)
+      }
+      
+      // Redirect to success page for tracking
+      router.push('/applied')
     } catch (error) {
       console.error('Submission error:', error)
       alert('There was an error submitting your application. Please try again.')
-    } finally {
       setIsSubmitting(false)
     }
   }
@@ -289,94 +296,6 @@ export default function ApplyPage() {
     if (!currentStepData.required) return true
     const value = formData[currentStepData.field]
     return value && value.trim() !== ''
-  }
-
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen bg-white dark:bg-dark_black">
-        {/* Success Page */}
-        <div className="min-h-screen flex flex-col items-center justify-center px-4">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", duration: 0.5 }}
-            className="w-20 h-20 bg-green/10 rounded-full flex items-center justify-center mx-auto mb-8"
-          >
-            <Check className="w-10 h-10 text-green" />
-          </motion.div>
-          
-          <h1 className="text-4xl md:text-5xl font-medium mb-4 text-center">
-            Application <span className="instrument-font italic">received!</span>
-          </h1>
-          
-          <p className="text-lg text-dark_black/60 dark:text-white/60 mb-6 text-center max-w-xl">
-            Thanks for applying, {formData.name}. We'll review your application and get back to you within 24-48 hours.
-          </p>
-          
-          <div className="bg-dark_black/5 dark:bg-white/5 rounded-xl p-6 mb-8 max-w-md w-full">
-            <p className="text-sm text-dark_black/60 dark:text-white/60 mb-4">
-              <strong>We accept approximately 30% of applicants</strong> based on:
-            </p>
-            <ul className="text-sm text-dark_black/80 dark:text-white/80 space-y-2">
-              <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green" />
-                Business viability & revenue
-              </li>
-              <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green" />
-                Timeline alignment
-              </li>
-              <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green" />
-                Project scope fit
-              </li>
-            </ul>
-          </div>
-
-          {/* Testimonials on success page */}
-          <div className="max-w-4xl w-full mb-8">
-            <p className="text-center text-sm text-dark_black/50 dark:text-white/50 mb-4">
-              Join 100+ businesses worldwide who've gotten free websites
-            </p>
-            <div className="grid md:grid-cols-3 gap-4">
-              {testimonials.map((t, i) => (
-                <div key={i} className="bg-dark_black/5 dark:bg-white/5 rounded-xl p-4 text-center">
-                  <div className="text-2xl font-bold text-purple_blue mb-1">{t.metric}</div>
-                  <div className="text-xs text-dark_black/50 dark:text-white/50 mb-2">{t.metricLabel}</div>
-                  <p className="text-sm text-dark_black/70 dark:text-white/70">"{t.quote.substring(0, 60)}..."</p>
-                  <p className="text-xs text-dark_black/50 dark:text-white/50 mt-2">— {t.author}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Book a Call CTA */}
-          <div className="text-center mb-6">
-            <p className="text-dark_black/60 dark:text-white/60 mb-4">
-              Want to discuss your project sooner?
-            </p>
-            <a
-              href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2hkzZr-aMGxNbQOI2afBAvcZauqQFj3pd96dOe3BN9F5wUUh6icE2KM3jq4BQYuEMa7EDiYIAr"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackCTA('Book a Call - Success Page', 'success_page')}
-              className="inline-flex items-center gap-2 bg-purple_blue text-white font-medium px-8 py-4 rounded-full hover:bg-purple_blue/90 transition-colors"
-            >
-              <Clock className="w-5 h-5" />
-              Book a 15-Minute Call
-            </a>
-          </div>
-
-          <Link
-            href="/"
-            onClick={() => trackCTA('Back to Home - Success Page', 'success_page')}
-            className="inline-flex items-center gap-2 text-purple_blue hover:underline"
-          >
-            ← Back to home
-          </Link>
-        </div>
-      </div>
-    )
   }
 
   return (
