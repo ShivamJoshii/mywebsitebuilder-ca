@@ -5,18 +5,18 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Check, Clock, ArrowLeft } from 'lucide-react'
 
-// Facebook Pixel tracking helper
+// Facebook Pixel tracking helper - only for form completion
 const trackPixelEvent = (eventName: string, params?: Record<string, any>) => {
   if (typeof window !== 'undefined' && (window as any).fbq) {
     (window as any).fbq('track', eventName, params)
   }
 }
 
-// Track CTA clicks
-const trackCTA = (ctaName: string, location: string) => {
+// Track form completion on success page load
+const trackFormComplete = () => {
   trackPixelEvent('Lead', {
-    content_name: ctaName,
-    location: location,
+    content_name: 'Website Application Completed',
+    status: 'completed',
     value: 0.0,
     currency: 'CAD'
   })
@@ -50,9 +50,9 @@ const testimonials = [
 export default function AppliedPage() {
   const [applicantName, setApplicantName] = useState<string>('')
 
-  // Track page view on mount and retrieve name from sessionStorage
+  // Track form completion on mount and retrieve name from sessionStorage
   useEffect(() => {
-    trackPixelEvent('PageView')
+    trackFormComplete()
     
     // Get applicant name from sessionStorage (set during form submission)
     const storedName = sessionStorage.getItem('applicantName')
@@ -128,7 +128,6 @@ export default function AppliedPage() {
             href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2hkzZr-aMGxNbQOI2afBAvcZauqQFj3pd96dOe3BN9F5wUUh6icE2KM3jq4BQYuEMa7EDiYIAr"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackCTA('Book a Call - Success Page', 'success_page')}
             className="inline-flex items-center gap-2 bg-purple_blue text-white font-medium px-8 py-4 rounded-full hover:bg-purple_blue/90 transition-colors"
           >
             <Clock className="w-5 h-5" />
@@ -138,7 +137,6 @@ export default function AppliedPage() {
 
         <Link
           href="/"
-          onClick={() => trackCTA('Back to Home - Success Page', 'success_page')}
           className="inline-flex items-center gap-2 text-purple_blue hover:underline"
         >
           <ArrowLeft className="w-4 h-4" />

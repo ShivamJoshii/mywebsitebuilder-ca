@@ -6,28 +6,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, ArrowLeft, Check, Building2, Briefcase, FileText, Globe, User, Mail, Phone, DollarSign, Clock, Star, TrendingUp } from 'lucide-react'
 
-// Facebook Pixel tracking helper
+// Facebook Pixel tracking helper - only for form completion
 const trackPixelEvent = (eventName: string, params?: Record<string, any>) => {
   if (typeof window !== 'undefined' && (window as any).fbq) {
     (window as any).fbq('track', eventName, params)
   }
 }
 
-// Track CTA clicks
-const trackCTA = (ctaName: string, location: string) => {
+// Track only form completion
+const trackFormComplete = () => {
   trackPixelEvent('Lead', {
-    content_name: ctaName,
-    location: location,
-    value: 0.0,
-    currency: 'CAD'
-  })
-}
-
-// Track InitiateCheckout for high-intent actions
-const trackInitiateCheckout = (step: number, field: string) => {
-  trackPixelEvent('InitiateCheckout', {
-    step: step,
-    field: field,
+    content_name: 'Website Application Completed',
+    status: 'completed',
     value: 0.0,
     currency: 'CAD'
   })
@@ -199,11 +189,7 @@ export default function ApplyPage() {
   const [formData, setFormData] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Track page view on mount
-  useEffect(() => {
-    trackPixelEvent('PageView')
-    trackPixelEvent('Lead', { step: 1, total_steps: steps.length })
-  }, [])
+  // No pixel tracking on mount - only track on form completion
 
   const currentStepData = steps[currentStep]
   const progress = ((currentStep + 1) / steps.length) * 100
@@ -212,12 +198,6 @@ export default function ApplyPage() {
     if (currentStep < steps.length - 1) {
       setDirection(1)
       setCurrentStep(currentStep + 1)
-      // Track step completion with InitiateCheckout for high-intent steps
-      if (currentStep >= 2) {
-        trackInitiateCheckout(currentStep + 1, steps[currentStep].field)
-      } else {
-        trackPixelEvent('Lead', { step: currentStep + 1, total_steps: steps.length })
-      }
     }
   }
 
@@ -238,14 +218,6 @@ export default function ApplyPage() {
 
     setIsSubmitting(true)
     
-    // Track submission attempt
-    trackPixelEvent('InitiateCheckout', {
-      step: steps.length,
-      field: 'submit',
-      value: 0.0,
-      currency: 'CAD'
-    })
-    
     // Submit to Netlify
     try {
       const form = new FormData()
@@ -260,19 +232,8 @@ export default function ApplyPage() {
         body: new URLSearchParams(form as any).toString()
       })
 
-      // Track successful form submission
-      trackPixelEvent('CompleteRegistration', {
-        content_name: 'Website Application',
-        status: true,
-        revenue: 0,
-        currency: 'CAD'
-      })
-      // Also track as Purchase for ROAS optimization
-      trackPixelEvent('Purchase', {
-        content_name: 'Free Website Application',
-        value: 0,
-        currency: 'CAD'
-      })
+      // Track successful form completion ONLY
+      trackFormComplete()
       
       // Store applicant name for the success page
       if (formData.name) {
@@ -589,7 +550,6 @@ export default function ApplyPage() {
               href="#"
               onClick={(e) => {
                 e.preventDefault()
-                trackCTA('Apply Now - Scroll to Top', 'testimonials_section')
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
               className="inline-flex items-center gap-2 bg-purple_blue text-white font-medium px-8 py-4 rounded-full hover:bg-purple_blue/90 transition-colors"
@@ -608,7 +568,6 @@ export default function ApplyPage() {
             © 2026 MyWebsiteBuilder.ca — A subsidiary of{' '}
             <Link 
               href="https://mybuilder.ca" 
-              onClick={() => trackCTA('MyBuilder Link - Footer', 'footer')}
               className="text-purple_blue hover:underline"
             >
               MyBuilder
