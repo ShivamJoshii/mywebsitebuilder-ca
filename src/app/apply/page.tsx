@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import Script from 'next/script'
 import { ArrowRight, ArrowLeft, Check, Building2, Briefcase, FileText, Globe, User, Mail, Phone, DollarSign, Clock, Star, TrendingUp } from 'lucide-react'
 
 // Facebook Pixel tracking helper
@@ -11,6 +10,26 @@ const trackPixelEvent = (eventName: string, params?: Record<string, any>) => {
   if (typeof window !== 'undefined' && (window as any).fbq) {
     (window as any).fbq('track', eventName, params)
   }
+}
+
+// Track CTA clicks
+const trackCTA = (ctaName: string, location: string) => {
+  trackPixelEvent('Lead', {
+    content_name: ctaName,
+    location: location,
+    value: 0.0,
+    currency: 'CAD'
+  })
+}
+
+// Track InitiateCheckout for high-intent actions
+const trackInitiateCheckout = (step: number, field: string) => {
+  trackPixelEvent('InitiateCheckout', {
+    step: step,
+    field: field,
+    value: 0.0,
+    currency: 'CAD'
+  })
 }
 
 // Animation variants
@@ -192,8 +211,12 @@ export default function ApplyPage() {
     if (currentStep < steps.length - 1) {
       setDirection(1)
       setCurrentStep(currentStep + 1)
-      // Track step completion
-      trackPixelEvent('Lead', { step: currentStep + 1, total_steps: steps.length })
+      // Track step completion with InitiateCheckout for high-intent steps
+      if (currentStep >= 2) {
+        trackInitiateCheckout(currentStep + 1, steps[currentStep].field)
+      } else {
+        trackPixelEvent('Lead', { step: currentStep + 1, total_steps: steps.length })
+      }
     }
   }
 
@@ -214,6 +237,14 @@ export default function ApplyPage() {
 
     setIsSubmitting(true)
     
+    // Track submission attempt
+    trackPixelEvent('InitiateCheckout', {
+      step: steps.length,
+      field: 'submit',
+      value: 0.0,
+      currency: 'CAD'
+    })
+    
     // Submit to Netlify
     try {
       const form = new FormData()
@@ -233,7 +264,14 @@ export default function ApplyPage() {
       trackPixelEvent('CompleteRegistration', {
         content_name: 'Website Application',
         status: true,
-        revenue: 0
+        revenue: 0,
+        currency: 'CAD'
+      })
+      // Also track as Purchase for ROAS optimization
+      trackPixelEvent('Purchase', {
+        content_name: 'Free Website Application',
+        value: 0,
+        currency: 'CAD'
       })
     } catch (error) {
       console.error('Submission error:', error)
@@ -321,6 +359,7 @@ export default function ApplyPage() {
               href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2hkzZr-aMGxNbQOI2afBAvcZauqQFj3pd96dOe3BN9F5wUUh6icE2KM3jq4BQYuEMa7EDiYIAr"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackCTA('Book a Call - Success Page', 'success_page')}
               className="inline-flex items-center gap-2 bg-purple_blue text-white font-medium px-8 py-4 rounded-full hover:bg-purple_blue/90 transition-colors"
             >
               <Clock className="w-5 h-5" />
@@ -330,6 +369,7 @@ export default function ApplyPage() {
 
           <Link
             href="/"
+            onClick={() => trackCTA('Back to Home - Success Page', 'success_page')}
             className="inline-flex items-center gap-2 text-purple_blue hover:underline"
           >
             ← Back to home
@@ -630,6 +670,7 @@ export default function ApplyPage() {
               href="#"
               onClick={(e) => {
                 e.preventDefault()
+                trackCTA('Apply Now - Scroll to Top', 'testimonials_section')
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
               className="inline-flex items-center gap-2 bg-purple_blue text-white font-medium px-8 py-4 rounded-full hover:bg-purple_blue/90 transition-colors"
@@ -646,7 +687,11 @@ export default function ApplyPage() {
         <div className="container text-center">
           <p className="text-sm text-dark_black/50 dark:text-white/50">
             © 2026 MyWebsiteBuilder.ca — A subsidiary of{' '}
-            <Link href="https://mybuilder.ca" className="text-purple_blue hover:underline">
+            <Link 
+              href="https://mybuilder.ca" 
+              onClick={() => trackCTA('MyBuilder Link - Footer', 'footer')}
+              className="text-purple_blue hover:underline"
+            >
               MyBuilder
             </Link>
           </p>

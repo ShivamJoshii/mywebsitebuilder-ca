@@ -13,8 +13,25 @@ import {
   Clock,
   Star,
   Menu,
-  CheckCircle2
+  X
 } from 'lucide-react'
+
+// Facebook Pixel tracking helper
+const trackPixelEvent = (eventName: string, params?: Record<string, any>) => {
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', eventName, params)
+  }
+}
+
+// Track button clicks
+const trackCTA = (ctaName: string, location: string) => {
+  trackPixelEvent('Lead', {
+    content_name: ctaName,
+    location: location,
+    value: 0.0,
+    currency: 'CAD'
+  })
+}
 
 // Animation variants (same as mybuilder.ca)
 const fadeInUp = {
@@ -123,7 +140,6 @@ const faqs = [
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [mobileMenu, setMobileMenu] = useState(false)
-  
 
   return (
     <div className="min-h-screen bg-white dark:bg-dark_black">
@@ -148,6 +164,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/apply"
+                onClick={() => trackCTA('Apply Now - Nav', 'navbar')}
                 className="group bg-purple_blue text-white font-medium flex items-center gap-2 py-2 px-5 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
                 Apply Now
@@ -182,7 +199,14 @@ export default function Home() {
               <Link href="#faq" className="block text-dark_black/70 dark:text-white/70" onClick={() => setMobileMenu(false)}>
                 FAQ
               </Link>
-              <Link href="/apply" className="block text-purple_blue font-medium" onClick={() => setMobileMenu(false)}>
+              <Link 
+                href="/apply" 
+                className="block text-purple_blue font-medium" 
+                onClick={() => {
+                  setMobileMenu(false)
+                  trackCTA('Apply Now - Mobile Nav', 'mobile_menu')
+                }}
+              >
                 Apply Now →
               </Link>
             </div>
@@ -225,6 +249,7 @@ export default function Home() {
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/apply"
+                onClick={() => trackCTA('Get My Free Website - Hero', 'hero_primary')}
                 className="group bg-purple_blue text-white font-medium flex items-center gap-3 py-3 px-6 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
               >
                 <span className="transform transition-transform group-hover:translate-x-1">
@@ -238,6 +263,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/apply"
+                onClick={() => trackCTA('Book a Call - Hero', 'hero_secondary')}
                 className="group bg-transparent border border-dark_black dark:border-white/50 text-dark_black dark:text-white font-medium flex items-center gap-2 py-3 px-5 rounded-full transition-all hover:bg-dark_black hover:text-white dark:hover:bg-white dark:hover:text-dark_black"
               >
                 <Clock className="w-4 h-4" />
@@ -307,6 +333,7 @@ export default function Home() {
           <div className="text-center mt-12">
             <Link
               href="/apply"
+              onClick={() => trackCTA('Apply Now - Pain Section', 'pain_points')}
               className="group inline-flex items-center gap-3 bg-purple_blue text-white font-medium py-3 px-8 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
             >
               Apply Now →
@@ -432,6 +459,7 @@ export default function Home() {
 
             <Link
               href="/apply"
+              onClick={() => trackCTA('Get My Free Assessment - Risk Section', 'risk_reversal')}
               className="group inline-flex items-center gap-3 bg-purple_blue text-white font-medium py-3 px-8 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
             >
               Get My Free Assessment
@@ -556,6 +584,18 @@ export default function Home() {
               </div>
             ))}
           </div>
+          
+          {/* FAQ CTA */}
+          <div className="text-center mt-12">
+            <Link
+              href="/apply"
+              onClick={() => trackCTA('Apply Now - FAQ Section', 'faq_bottom')}
+              className="group inline-flex items-center gap-3 bg-purple_blue text-white font-medium py-3 px-8 rounded-full border border-purple_blue transition-all hover:bg-transparent hover:text-purple_blue"
+            >
+              Get Started — Apply Now
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -573,7 +613,11 @@ export default function Home() {
               </Link>
             </p>
             <div className="flex items-center gap-6 text-sm text-dark_black/50 dark:text-white/50">
-              <Link href="mailto:hello@mybuilder.ca" className="hover:text-purple_blue transition-colors">
+              <Link 
+                href="mailto:hello@mybuilder.ca" 
+                onClick={() => trackCTA('Email Footer', 'footer')}
+                className="hover:text-purple_blue transition-colors"
+              >
                 hello@mybuilder.ca
               </Link>
             </div>
